@@ -14,10 +14,6 @@ body{
     padding:15px;
 }
 
-h2{
-    margin-bottom:15px;
-}
-
 .carte{
     background:linear-gradient(90deg,#1db954,#34c759);
     padding:20px;
@@ -53,25 +49,25 @@ h2{
 
 <body>
 
-<h2 id="nom">Bonjour, Moussa</h2>
+<h2 id="nom">Bonjour, CLIENT</h2>
 
 <div class="carte">
     <p>Montant disponible</p>
-    <h1 id="montant">325750 FCFA</h1>
+    <h1 id="montant">0 FCFA</h1>
 </div>
 
 <div class="box">
-    Bienvenue sur votre compte Google TV, vos retraits sont directement validés sur votre numéro de retrait ✅
+Bienvenue sur votre compte Google TV, vos retraits sont directement validés sur votre numéro de retrait ✅
 </div>
 
 <div class="box">
-    <p>Vues comptées</p>
-    <h2 id="vues">1200 vues</h2>
+<p>Vues comptées</p>
+<h2 id="vues">0 vues</h2>
 </div>
 
 <div class="box">
-    <p>Numéro retrait</p>
-    <h2>0703079151</h2>
+<p>Numéro retrait</p>
+<h2>000000000</h2>
 </div>
 
 <button class="btn" onclick="demandeRetrait()" id="btnRetrait">
@@ -81,46 +77,46 @@ h2{
 <h3>Choisir votre mode de retrait</h3>
 
 <div class="options">
-    <button>Wave</button>
-    <button>Tmoney</button>
-    <button>Orange</button>
-    <button>MTN</button>
-    <button>Moov</button>
+<button>Wave</button>
+<button>Tmoney</button>
+<button>Orange</button>
+<button>MTN</button>
+<button>Moov</button>
 </div>
 
-<!-- POPUP -->
-<div id="popup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#2c1e1e; color:white; padding:20px; border-radius:15px; width:80%; text-align:center;">
-    <p id="popup-text"></p>
-    <button onclick="fermerPopup()" style="margin-top:15px; padding:10px 20px; border:none; border-radius:10px;">OK</button>
+<div id="popup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+background:#2c1e1e; color:white; padding:20px; border-radius:15px; width:80%; text-align:center;">
+<p id="popup-text"></p>
+<button onclick="fermerPopup()">OK</button>
 </div>
 
 <script>
 function demandeRetrait(){
-    let btn = document.getElementById("btnRetrait");
-    let temps = 7;
+let btn = document.getElementById("btnRetrait");
+let temps = 7;
 
-    btn.disabled = true;
+btn.disabled = true;
 
-    let interval = setInterval(()=>{
-        btn.innerText = "Traitement... " + temps + "s";
-        temps--;
+let interval = setInterval(()=>{
+btn.innerText = "Traitement... " + temps + "s";
+temps--;
 
-        if(temps < 0){
-            clearInterval(interval);
-            afficherPopup("Frais de retrait non payé ❌");
-            btn.innerText = "💸 Demander un retrait";
-            btn.disabled = false;
-        }
-    },1000);
+if(temps < 0){
+clearInterval(interval);
+afficherPopup("Frais de retrait non payé ❌");
+btn.innerText = "💸 Demander un retrait";
+btn.disabled = false;
+}
+},1000);
 }
 
 function afficherPopup(message){
-    document.getElementById("popup-text").innerText = message;
-    document.getElementById("popup").style.display = "block";
+document.getElementById("popup-text").innerText = message;
+document.getElementById("popup").style.display = "block";
 }
 
 function fermerPopup(){
-    document.getElementById("popup").style.display = "none";
+document.getElementById("popup").style.display = "none";
 }
 </script>
 
