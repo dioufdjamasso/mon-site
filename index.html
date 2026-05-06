@@ -1,14 +1,105 @@
 <!DOCTYPE html>
 <html>
-<body>
-    <h1>Bienvenue sur mon site</h1>
-    <p>Nom: <span id="nom"></span></p>
-    <p>Solde: <span id="solde"></span></p>
+<head>
+<meta charset="UTF-8">
+<title>Compte client</title>
 
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        document.getElementById('nom').innerText = params.get('nom') || "Inconnu";
-        document.getElementById('solde').innerText = params.get('solde') || "0";
-    </script>
+<style>
+body {
+  font-family: Arial;
+  background: #0b1c2c;
+  color: white;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 22px;
+}
+
+.card {
+  background: linear-gradient(90deg, #00c853, #69f0ae);
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.box {
+  background: #1c2b3a;
+  padding: 15px;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+button {
+  background: #00c853;
+  border: none;
+  padding: 15px;
+  width: 100%;
+  color: white;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="nom">Chargement...</h1>
+
+<div class="card">
+  Montant disponible <br>
+  <span id="solde"></span>
+</div>
+
+<div class="box">
+  Vues comptées <br>
+  <span id="vues"></span>
+</div>
+
+<div class="box">
+  Numéro retrait <br>
+  <span id="numero"></span>
+</div>
+
+<button>💸 Demander un retrait</button>
+
+<p style="color: yellow;">FRAIS DE RETRAIT NON PAYÉ ❌</p>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "TA_CLE_API",
+  authDomain: "TON_PROJET.firebaseapp.com",
+  projectId: "TON_PROJET"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// récupérer numéro dans lien
+const params = new URLSearchParams(window.location.search);
+const numeroClient = params.get("numero");
+
+if(numeroClient){
+  db.collection("users").doc(numeroClient).get().then(doc => {
+    if(doc.exists){
+      let data = doc.data();
+
+      document.getElementById("nom").innerText = "Bonjour, " + data.name;
+      document.getElementById("solde").innerText = data.solde + " FCFA";
+      document.getElementById("vues").innerText = data.vues + " vues";
+      document.getElementById("numero").innerText = data.numero_retrait;
+    } else {
+      document.getElementById("nom").innerText = "Client introuvable";
+    }
+  });
+}
+</script>
+
 </body>
 </html>
