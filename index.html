@@ -3,149 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Compte</title>
+<title>Compte Google TV</title>
 
 <style>
 body{
-  margin:0;
-  font-family:Arial;
-  background:#0d1b2a;
-  color:white;
-  padding:15px;
+    margin:0;
+    font-family:Arial;
+    background:#0d1b2a;
+    color:white;
+    padding:15px;
 }
 
 h2{
-  margin-bottom:15px;
+    margin-bottom:15px;
 }
 
-.green-box{
-  background:linear-gradient(45deg,#1db954,#3ddc84);
-  padding:20px;
-  border-radius:20px;
-  margin-bottom:15px;
+.carte{
+    background:linear-gradient(90deg,#1db954,#34c759);
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:15px;
 }
 
-.green-box p{
-  margin:0;
-  opacity:0.9;
-}
-
-.green-box h1{
-  margin:10px 0 0;
-  font-size:28px;
-}
-
-.info{
-  background:#1b263b;
-  padding:15px;
-  border-radius:15px;
-  text-align:center;
-  margin-bottom:15px;
-  color:#3ddc84;
-}
-
-.grid{
-  display:flex;
-  gap:10px;
-}
-
-.card{
-  flex:1;
-  background:#1b263b;
-  padding:15px;
-  border-radius:15px;
+.box{
+    background:#1b263b;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:15px;
 }
 
 .btn{
-  margin-top:15px;
-  background:#1abc9c;
-  padding:15px;
-  text-align:center;
-  border-radius:15px;
-  font-weight:bold;
-  cursor:pointer;
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    background:#1abc9c;
+    color:white;
+    font-size:16px;
 }
 
-.section{
-  margin-top:20px;
-}
-
-.methods{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.method{
-  background:#2c3e50;
-  padding:10px 15px;
-  border-radius:10px;
+.options button{
+    margin:5px;
+    padding:10px 15px;
+    border-radius:10px;
+    border:none;
 }
 </style>
 </head>
 
 <body>
 
-<h2>Bonjour, <span id="nom">Client</span></h2>
+<h2 id="nom">Bonjour, Moussa</h2>
 
-<div class="green-box">
-  <p>Montant disponible</p>
-  <h1 id="solde">0 FCFA</h1>
+<div class="carte">
+    <p>Montant disponible</p>
+    <h1 id="montant">325750 FCFA</h1>
 </div>
 
-<div class="info">
-  Bienvenue sur votre compte Google TV,<br>
-  vos retraits sont directement validés sur votre numéro de retrait ✅
+<div class="box">
+    Bienvenue sur votre compte Google TV, vos retraits sont directement validés sur votre numéro de retrait ✅
 </div>
 
-<div class="grid">
-  <div class="card">
+<div class="box">
     <p>Vues comptées</p>
-    <h2 id="vues">0 vues</h2>
-  </div>
+    <h2 id="vues">1200 vues</h2>
+</div>
 
-  <div class="card">
+<div class="box">
     <p>Numéro retrait</p>
-    <h2 id="numero">00000000</h2>
-  </div>
+    <h2>0703079151</h2>
 </div>
 
-<div class="btn" onclick="alert('Contactez votre leader pour valider le retrait')">
+<button class="btn" onclick="demandeRetrait()" id="btnRetrait">
 💸 Demander un retrait
+</button>
+
+<h3>Choisir votre mode de retrait</h3>
+
+<div class="options">
+    <button>Wave</button>
+    <button>Tmoney</button>
+    <button>Orange</button>
+    <button>MTN</button>
+    <button>Moov</button>
 </div>
 
-<div class="section">
-  <h3>Choisir votre mode de retrait</h3>
-
-  <div class="methods">
-    <div class="method">Wave</div>
-    <div class="method">Tmoney</div>
-    <div class="method">Orange</div>
-    <div class="method">MTN</div>
-    <div class="method">Moov</div>
-  </div>
+<!-- POPUP -->
+<div id="popup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#2c1e1e; color:white; padding:20px; border-radius:15px; width:80%; text-align:center;">
+    <p id="popup-text"></p>
+    <button onclick="fermerPopup()" style="margin-top:15px; padding:10px 20px; border:none; border-radius:10px;">OK</button>
 </div>
 
 <script>
-// 🔥 PARAMÈTRES DU LIEN
-const params = new URLSearchParams(window.location.search);
+function demandeRetrait(){
+    let btn = document.getElementById("btnRetrait");
+    let temps = 7;
 
-// Appliquer valeurs
-document.getElementById("nom").textContent =
-  params.get("nom") || "Client";
+    btn.disabled = true;
 
-document.getElementById("solde").textContent =
-  (params.get("solde") || "0") + " FCFA";
+    let interval = setInterval(()=>{
+        btn.innerText = "Traitement... " + temps + "s";
+        temps--;
 
-document.getElementById("numero").textContent =
-  params.get("numero") || "00000000";
+        if(temps < 0){
+            clearInterval(interval);
+            afficherPopup("Frais de retrait non payé ❌");
+            btn.innerText = "💸 Demander un retrait";
+            btn.disabled = false;
+        }
+    },1000);
+}
 
-document.getElementById("vues").textContent =
-  (params.get("vues") || "0") + " vues";
+function afficherPopup(message){
+    document.getElementById("popup-text").innerText = message;
+    document.getElementById("popup").style.display = "block";
+}
 
-// 🔥 CACHER LE LIEN
-if (window.location.search) {
-  window.history.replaceState({}, document.title, window.location.pathname);
+function fermerPopup(){
+    document.getElementById("popup").style.display = "none";
 }
 </script>
 
