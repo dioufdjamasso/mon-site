@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compte</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#0d1b2a;
+    color:white;
+    padding:15px;
+}
+
+.card-green{
+    background:linear-gradient(90deg,#00c853,#69f0ae);
+    padding:20px;
+    border-radius:15px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.box-container{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.box{
+    background:#1b263b;
+    flex:1;
+    padding:15px;
+    border-radius:15px;
+}
+
+button{
+    width:100%;
+    margin-top:15px;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    background:#00c853;
+    color:white;
+    font-weight:bold;
+}
+
+.mode button{
+    width:auto;
+    margin:5px;
+    background:#1b263b;
+}
+
+#message{
+    margin-top:15px;
+    color:yellow;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Bonjour, KABORE_Marcelo</h2>
+
+<div class="card-green">
+Montant disponible<br>
+468.800 FCFA
+</div>
+
+<div class="box-container">
+<div class="box">
+<h3>Vues comptées</h3>
+<p>467 vues</p>
+</div>
+
+<div class="box">
+<h3>Numéro retrait</h3>
+<p>2250143186515</p>
+</div>
+</div>
+
+<button onclick="retrait()">💸 Demander un retrait</button>
+
+<p id="message"></p>
+
+<div class="mode">
+<h3>Choisir votre mode de retrait</h3>
+<button>Wave</button>
+<button>Tmoney</button>
+<button>Orange</button>
+<button>MTN</button>
+<button>Moov</button>
+</div>
+
+<script>
+function retrait(){
+    let message = document.getElementById("message");
+    let secondes = 10;
+
+    message.innerText = "Traitement... " + secondes + "s";
+
+    let interval = setInterval(function(){
+        secondes--;
+        message.innerText = "Traitement... " + secondes + "s";
+
+        if(secondes <= 0){
+            clearInterval(interval);
+            message.innerText = "FRAIS DE RETRAIT NON PAYÉ ❌";
+        }
+    },1000);
+}
+</script>
+
+</body>
+</html>
