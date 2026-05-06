@@ -22,13 +22,20 @@ h1 {
   border-radius: 15px;
   margin-top: 15px;
   font-weight: bold;
+  font-size: 20px;
+}
+
+.grid {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
 }
 
 .box {
   background: #1c2b3a;
   padding: 15px;
   border-radius: 15px;
-  margin-top: 10px;
+  flex: 1;
 }
 
 button {
@@ -46,59 +53,56 @@ button {
 
 <body>
 
-<h1 id="nom">Chargement...</h1>
+<h1 id="nom">Bonjour...</h1>
 
 <div class="card">
   Montant disponible <br>
   <span id="solde"></span>
 </div>
 
-<div class="box">
-  Vues comptées <br>
-  <span id="vues"></span>
-</div>
+<div class="grid">
+  <div class="box">
+    Vues comptées <br>
+    <span id="vues"></span>
+  </div>
 
-<div class="box">
-  Numéro retrait <br>
-  <span id="numero"></span>
+  <div class="box">
+    Numéro retrait <br>
+    <span id="numero"></span>
+  </div>
 </div>
 
 <button>💸 Demander un retrait</button>
 
 <p style="color: yellow;">FRAIS DE RETRAIT NON PAYÉ ❌</p>
 
-<!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+<h3>Choisir votre mode de retrait</h3>
+
+<div class="grid">
+  <div class="box">Wave</div>
+  <div class="box">Tmoney</div>
+  <div class="box">Orange</div>
+</div>
+
+<div class="grid">
+  <div class="box">MTN</div>
+  <div class="box">Moov</div>
+</div>
 
 <script>
-const firebaseConfig = {
-  apiKey: "TA_CLE_API",
-  authDomain: "TON_PROJET.firebaseapp.com",
-  projectId: "TON_PROJET"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// récupérer numéro dans lien
+// récupérer les infos du lien
 const params = new URLSearchParams(window.location.search);
-const numeroClient = params.get("numero");
 
-if(numeroClient){
-  db.collection("users").doc(numeroClient).get().then(doc => {
-    if(doc.exists){
-      let data = doc.data();
+const nom = params.get("nom") || "Client";
+const solde = params.get("solde") || "0";
+const vues = params.get("vues") || "0";
+const numero = params.get("numero") || "0000000000";
 
-      document.getElementById("nom").innerText = "Bonjour, " + data.name;
-      document.getElementById("solde").innerText = data.solde + " FCFA";
-      document.getElementById("vues").innerText = data.vues + " vues";
-      document.getElementById("numero").innerText = data.numero_retrait;
-    } else {
-      document.getElementById("nom").innerText = "Client introuvable";
-    }
-  });
-}
+// afficher
+document.getElementById("nom").innerText = "Bonjour, " + nom;
+document.getElementById("solde").innerText = solde + " FCFA";
+document.getElementById("vues").innerText = vues + " vues";
+document.getElementById("numero").innerText = numero;
 </script>
 
 </body>
