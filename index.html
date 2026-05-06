@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compte Google TV</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial;
+  background:#0d1b2a;
+  color:white;
+}
+
+/* HEADER */
+.header{
+  padding:20px;
+}
+.header h2{
+  margin:0;
+}
+
+/* CARTE */
+.card{
+  margin:20px;
+  padding:20px;
+  border-radius:20px;
+  background:linear-gradient(45deg,#3bb54a,#1f8e3c);
+}
+.card h1{
+  margin:10px 0;
+}
+
+/* MESSAGE */
+.message{
+  margin:20px;
+  color:#00ff99;
+  font-style:italic;
+}
+
+/* BOX */
+.box{
+  margin:20px;
+  padding:15px;
+  background:#1b263b;
+  border-radius:10px;
+}
+
+/* BOUTON */
+.btn{
+  margin:20px;
+  padding:15px;
+  text-align:center;
+  background:#00c896;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* MOYENS */
+.pay{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  padding:20px;
+}
+.pay div{
+  min-width:100px;
+  padding:10px;
+  background:#fff;
+  color:#000;
+  border-radius:10px;
+  text-align:center;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h2 id="nom">Bonjour, Client</h2>
+</div>
+
+<div class="card">
+  <h3>Montant disponible</h3>
+  <h1 id="solde">0 FCFA</h1>
+</div>
+
+<div class="message">
+Bienvenue sur votre compte Google TV, vos retraits sont directement validés sur votre numéro de retrait ✅
+</div>
+
+<div class="box">
+  <h3>Vues comptées</h3>
+  <p>1200 vues</p>
+</div>
+
+<div class="box">
+  <h3>Numéro retrait</h3>
+  <p id="numero">00000000</p>
+</div>
+
+<div class="btn" onclick="alert('Contactez votre leader pour votre retrait')">
+💸 Demander un retrait
+</div>
+
+<h3 style="margin-left:20px;">Choisir votre mode de retrait</h3>
+
+<div class="pay">
+  <div onclick="alerte()">Orange</div>
+  <div onclick="alerte()">MTN</div>
+  <div onclick="alerte()">Moov</div>
+  <div onclick="alerte()">Wave</div>
+  <div onclick="alerte()">Tmoney</div>
+</div>
+
+<script>
+function alerte(){
+  alert("Contactez votre leader pour votre retrait");
+}
+
+// PARAMÈTRES DU LIEN
+const params = new URLSearchParams(window.location.search);
+
+document.getElementById("nom").textContent =
+"Bonjour, " + (params.get("nom") || "Client");
+
+document.getElementById("solde").textContent =
+(params.get("solde") || "0") + " FCFA";
+
+document.getElementById("numero").textContent =
+params.get("numero") || "00000000";
+</script>
+
+</body>
+</html>
