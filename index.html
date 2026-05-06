@@ -91,7 +91,7 @@ button {
 
 <script>
 // récupérer les infos du lien
-const params = new URLSearchParams(window.location.search);
+const params = new (window.location.search);
 
 const nom = params.get("nom") || "Client";
 const solde = params.get("solde") || "0";
