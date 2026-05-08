@@ -1,108 +1,342 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Compte client</title>
 
 <style>
-body {
-  font-family: Arial;
-  background: #0b1c2c;
-  color: white;
-  padding: 20px;
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
 }
 
-h1 {
-  font-size: 22px;
+body{
+background:#061a33;
+color:white;
+padding:20px;
 }
 
-.card {
-  background: linear-gradient(90deg, #00c853, #69f0ae);
-  padding: 20px;
-  border-radius: 15px;
-  margin-top: 15px;
-  font-weight: bold;
-  font-size: 20px;
+h1{
+font-size:22px;
+margin-bottom:20px;
 }
 
-.grid {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
+.card-solde{
+background:#20e38a;
+padding:18px;
+border-radius:18px;
+margin-bottom:20px;
 }
 
-.box {
-  background: #1c2b3a;
-  padding: 15px;
-  border-radius: 15px;
-  flex: 1;
+.card-solde h2{
+font-size:18px;
+margin-bottom:10px;
 }
 
-button {
-  background: #00c853;
-  border: none;
-  padding: 15px;
-  width: 100%;
-  color: white;
-  border-radius: 10px;
-  margin-top: 20px;
-  font-size: 16px;
+.solde{
+font-size:38px;
+font-weight:bold;
 }
+
+.message{
+background:#0e2145;
+padding:18px;
+border-radius:18px;
+margin-bottom:20px;
+text-align:center;
+font-size:15px;
+font-weight:bold;
+line-height:28px;
+color:#32ff7e;
+}
+
+.stats{
+display:flex;
+gap:15px;
+margin-bottom:20px;
+}
+
+.box{
+flex:1;
+background:#0e2145;
+padding:18px;
+border-radius:18px;
+text-align:center;
+}
+
+.box h3{
+font-size:14px;
+margin-bottom:10px;
+color:#aaa;
+}
+
+.box p{
+font-size:20px;
+font-weight:bold;
+}
+
+.btn{
+width:100%;
+background:#20e38a;
+border:none;
+padding:18px;
+font-size:20px;
+font-weight:bold;
+border-radius:18px;
+cursor:pointer;
+margin-top:10px;
+margin-bottom:25px;
+}
+
+.titre{
+font-size:16px;
+margin-bottom:10px;
+}
+
+.reseaux{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+flex-wrap:wrap;
+}
+
+.reseau{
+background:#0e2145;
+padding:12px 18px;
+border-radius:12px;
+cursor:pointer;
+font-size:14px;
+}
+
+.numero-box{
+background:#0e2145;
+padding:18px;
+border-radius:18px;
+margin-top:15px;
+line-height:30px;
+font-size:15px;
+}
+
+.progress-zone{
+margin-top:25px;
+display:none;
+}
+
+.progress-text{
+font-size:16px;
+margin-bottom:12px;
+}
+
+.loader{
+width:60px;
+height:60px;
+border:6px solid #ccc;
+border-top:6px solid #20e38a;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin:15px auto;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+.progress{
+width:100%;
+height:20px;
+background:#ddd;
+border-radius:20px;
+overflow:hidden;
+margin-top:15px;
+}
+
+.bar{
+width:0%;
+height:100%;
+background:green;
+text-align:center;
+line-height:20px;
+font-size:12px;
+transition:0.3s;
+}
+
+#temps{
+margin-top:10px;
+font-size:14px;
+text-align:center;
+}
+
+#fin{
+margin-top:15px;
+text-align:center;
+font-size:13px;
+color:red;
+font-weight:bold;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1 id="nom">Bonjour...</h1>
+<h1>
+Bonjour, <span id="nom"></span>
+</h1>
 
-<div class="card">
-  Montant disponible <br>
-  <span id="solde"></span>
+<div class="card-solde">
+<h2>Montant disponible</h2>
+<div class="solde">
+<span id="solde"></span> FCFA
+</div>
 </div>
 
-<div class="grid">
-  <div class="box">
-    Vues comptées <br>
-    <span id="vues"></span>
-  </div>
-
-  <div class="box">
-    Numéro retrait <br>
-    <span id="numero"></span>
-  </div>
+<div class="message">
+Bienvenue sur votre compte Google TV, vos retraits sont directement validés sur votre numéro de retrait ✅
 </div>
 
-<button>💸 Demander un retrait</button>
+<div class="stats">
 
-<p style="color: yellow;">FRAIS DE RETRAIT NON PAYÉ ❌</p>
-
-<h3>Choisir votre mode de retrait</h3>
-
-<div class="grid">
-  <div class="box">Wave</div>
-  <div class="box">Tmoney</div>
-  <div class="box">Orange</div>
+<div class="box">
+<h3>Vues comptées</h3>
+<p><span id="vues"></span></p>
 </div>
 
-<div class="grid">
-  <div class="box">MTN</div>
-  <div class="box">Moov</div>
+<div class="box">
+<h3>Numéro retrait</h3>
+<p><span id="numero"></span></p>
+</div>
+
+</div>
+
+<button class="btn" id="retrait">
+💸 Demander un retrait
+</button>
+
+<div class="titre">
+Choisir votre mode de retrait
+</div>
+
+<div class="reseaux">
+
+<div class="reseau" onclick="choisirReseau('Wave')">
+Wave
+</div>
+
+<div class="reseau" onclick="choisirReseau('MTN')">
+MTN
+</div>
+
+<div class="reseau" onclick="choisirReseau('Moov')">
+Moov
+</div>
+
+<div class="reseau" onclick="choisirReseau('Orange')">
+Orange
+</div>
+
+</div>
+
+<div class="numero-box">
+Numéro retrait : <br>
+<span id="numeroAffiche"></span>
+
+<br><br>
+
+Réseau :
+<span id="reseauChoisi">
+Aucun
+</span>
+</div>
+
+<div class="progress-zone" id="zoneProgress">
+
+<div class="progress-text">
+Transaction vers numéro en cours...
+</div>
+
+<div class="loader"></div>
+
+<div class="progress">
+<div class="bar" id="bar">
+0%
+</div>
+</div>
+
+<div id="temps">
+99 secondes restantes
+</div>
+
+<div id="fin"></div>
+
 </div>
 
 <script>
-// récupérer les infos du lien
-const params = new (window.location.search);
 
-const nom = params.get("nom") || "Client";
-const solde = params.get("solde") || "0";
-const vues = params.get("vues") || "0";
-const numero = params.get("numero") || "0000000000";
+const params = new URLSearchParams(window.location.search);
 
-// afficher
-document.getElementById("nom").innerText = "Bonjour, " + nom;
-document.getElementById("solde").innerText = solde + " FCFA";
-document.getElementById("vues").innerText = vues + " vues";
-document.getElementById("numero").innerText = numero;
+document.getElementById("nom").innerText =
+params.get("nom") || "Client";
+
+document.getElementById("solde").innerText =
+params.get("solde") || "0";
+
+document.getElementById("vues").innerText =
+(params.get("vues") || "0") + " vues";
+
+document.getElementById("numero").innerText =
+params.get("numero") || "Non défini";
+
+document.getElementById("numeroAffiche").innerText =
+params.get("numero") || "Non défini";
+
+function choisirReseau(reseau){
+document.getElementById("reseauChoisi").innerText = reseau;
+}
+
+const bouton = document.getElementById("retrait");
+
+bouton.addEventListener("click", function(){
+
+document.getElementById("zoneProgress").style.display = "block";
+
+let temps = 99;
+let pourcentage = 0;
+
+const bar = document.getElementById("bar");
+const tempsTexte = document.getElementById("temps");
+const fin = document.getElementById("fin");
+
+const interval = setInterval(function(){
+
+temps--;
+pourcentage++;
+
+bar.style.width = pourcentage + "%";
+bar.innerHTML = pourcentage + "%";
+
+tempsTexte.innerHTML =
+temps + " secondes restantes";
+
+if(temps <= 0){
+
+clearInterval(interval);
+
+fin.innerHTML =
+"Retrait impossible, contactez votre leader";
+
+}
+
+},1000);
+
+});
+
 </script>
 
 </body>
