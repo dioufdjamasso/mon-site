@@ -128,15 +128,15 @@ display:none;
 }
 
 .progress-text{
-font-size:16px;
+font-size:14px;
 margin-bottom:12px;
 }
 
 .loader{
-width:60px;
-height:60px;
-border:6px solid #ccc;
-border-top:6px solid #20e38a;
+width:45px;
+height:45px;
+border:5px solid #ccc;
+border-top:5px solid #20e38a;
 border-radius:50%;
 animation:spin 1s linear infinite;
 margin:15px auto;
@@ -150,7 +150,7 @@ transform:rotate(360deg);
 
 .progress{
 width:100%;
-height:20px;
+height:12px;
 background:#ddd;
 border-radius:20px;
 overflow:hidden;
@@ -162,23 +162,15 @@ width:0%;
 height:100%;
 background:green;
 text-align:center;
-line-height:20px;
-font-size:12px;
+line-height:12px;
+font-size:9px;
 transition:0.3s;
 }
 
 #temps{
 margin-top:10px;
-font-size:14px;
-text-align:center;
-}
-
-#fin{
-margin-top:15px;
-text-align:center;
 font-size:13px;
-color:red;
-font-weight:bold;
+text-align:center;
 }
 
 </style>
@@ -192,6 +184,7 @@ Bonjour, <span id="nom"></span>
 
 <div class="card-solde">
 <h2>Montant disponible</h2>
+
 <div class="solde">
 <span id="solde"></span> FCFA
 </div>
@@ -244,7 +237,9 @@ Orange
 </div>
 
 <div class="numero-box">
+
 Numéro retrait : <br>
+
 <span id="numeroAffiche"></span>
 
 <br><br>
@@ -253,6 +248,7 @@ Réseau :
 <span id="reseauChoisi">
 Aucun
 </span>
+
 </div>
 
 <div class="progress-zone" id="zoneProgress">
@@ -264,16 +260,16 @@ Transaction vers numéro en cours...
 <div class="loader"></div>
 
 <div class="progress">
+
 <div class="bar" id="bar">
 0%
 </div>
+
 </div>
 
 <div id="temps">
 99 secondes restantes
 </div>
-
-<div id="fin"></div>
 
 </div>
 
@@ -297,7 +293,9 @@ document.getElementById("numeroAffiche").innerText =
 params.get("numero") || "Non défini";
 
 function choisirReseau(reseau){
+
 document.getElementById("reseauChoisi").innerText = reseau;
+
 }
 
 const bouton = document.getElementById("retrait");
@@ -310,16 +308,36 @@ let temps = 99;
 let pourcentage = 0;
 
 const bar = document.getElementById("bar");
-const tempsTexte = document.getElementById("temps");
-const fin = document.getElementById("fin");
+
+const tempsTexte =
+document.getElementById("temps");
+
+const texte =
+document.querySelector(".progress-text");
+
+// Revenir en vert à chaque clic
+texte.innerHTML =
+"Transaction vers numéro en cours...";
+
+texte.style.color = "white";
+
+bar.style.background = "green";
+
+bar.style.width = "0%";
+
+bar.innerHTML = "0%";
 
 const interval = setInterval(function(){
 
 temps--;
+
 pourcentage++;
 
-bar.style.width = pourcentage + "%";
-bar.innerHTML = pourcentage + "%";
+bar.style.width =
+pourcentage + "%";
+
+bar.innerHTML =
+pourcentage + "%";
 
 tempsTexte.innerHTML =
 temps + " secondes restantes";
@@ -328,16 +346,14 @@ if(temps <= 0){
 
 clearInterval(interval);
 
-// Texte rouge en haut
-document.querySelector(".progress-text").innerHTML =
+// Rouge à la fin
+texte.innerHTML =
 "Retrait impossible contactez votre liader";
 
-document.querySelector(".progress-text").style.color = "red";
+texte.style.color = "red";
 
-// Barre devient rouge
 bar.style.background = "red";
 
-// Supprime les secondes
 tempsTexte.innerHTML = "";
 
 }
