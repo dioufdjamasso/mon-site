@@ -28,7 +28,7 @@ font-size:20px;
 margin-bottom:18px;
 }
 
-/* CARTE SOLDE */
+/* SOLDE */
 
 .solde-box{
 background:#4b4bd6;
@@ -115,7 +115,7 @@ margin-bottom:20px;
 color:#03142d;
 }
 
-/* TITRE RESEAUX */
+/* TITRE */
 
 .titre{
 font-size:14px;
@@ -150,6 +150,20 @@ line-height:26px;
 font-size:14px;
 }
 
+/* INPUT */
+
+input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#1a2d55;
+color:white;
+font-size:14px;
+outline:none;
+margin-bottom:15px;
+}
+
 /* PROGRESSION */
 
 .progress-zone{
@@ -163,7 +177,7 @@ margin-bottom:10px;
 text-align:center;
 }
 
-/* ROND QUI TOURNE */
+/* ROND */
 
 .loader{
 width:40px;
@@ -251,8 +265,8 @@ Bienvenue sur votre compte Google TV, vos retraits sont directement validés sur
 </div>
 
 <div class="box">
-<h3>Numéro retrait</h3>
-<p><span id="numero"></span></p>
+<h3>Retrait</h3>
+<p>Disponible</p>
 </div>
 
 </div>
@@ -293,13 +307,27 @@ Orange
 
 <div class="numero-box">
 
-Numéro retrait : <br>
+<div style="
+font-size:14px;
+font-weight:bold;
+margin-bottom:10px;
+">
+Veuillez saisir numéro de retrait
+</div>
 
-<span id="numeroAffiche"></span>
+<input
+type="text"
+placeholder="Entrez votre numéro"
+/>
 
-<br><br>
-
+<div style="
+font-size:14px;
+font-weight:bold;
+margin-bottom:5px;
+">
 Réseau :
+</div>
+
 <span id="reseauChoisi">
 Aucun
 </span>
@@ -344,12 +372,6 @@ params.get("solde") || "0";
 
 document.getElementById("vues").innerText =
 (params.get("vues") || "0") + " vues";
-
-document.getElementById("numero").innerText =
-params.get("numero") || "Non défini";
-
-document.getElementById("numeroAffiche").innerText =
-params.get("numero") || "Non défini";
 
 /* RESEAU */
 
