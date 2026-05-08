@@ -209,7 +209,7 @@ Bienvenue sur votre compte Google TV, vos retraits sont directement validés sur
 </div>
 
 <button class="btn" id="retrait">
-💸 Demander un retrait
+💸 RETIRER
 </button>
 
 <div class="titre">
@@ -304,6 +304,12 @@ bouton.addEventListener("click", function(){
 
 document.getElementById("zoneProgress").style.display = "block";
 
+// Défilement automatique
+document.getElementById("zoneProgress")
+.scrollIntoView({
+behavior:"smooth"
+});
+
 let temps = 99;
 let pourcentage = 0;
 
@@ -365,4 +371,4 @@ tempsTexte.innerHTML = "";
 </script>
 
 </body>
-</html>
+  </html>
