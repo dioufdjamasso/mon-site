@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compte Client</title>
+<title>Compte client</title>
 
 <style>
 
@@ -16,138 +16,361 @@ font-family:Arial;
 }
 
 body{
-background:#03142d;
+background:#061a33;
 color:white;
 padding:20px;
 }
 
-.app{
-max-width:450px;
-margin:auto;
-}
+/* TITRE */
 
 h1{
-font-size:40px;
-margin-top:30px;
-margin-bottom:30px;
-}
-
-.card{
-background:linear-gradient(90deg,#00d94f,#34d7c3);
-padding:30px;
-border-radius:30px;
-margin-bottom:30px;
-}
-
-.card h2{
 font-size:20px;
-font-weight:normal;
-margin-bottom:20px;
+margin-bottom:18px;
 }
 
-.solde{
-font-size:55px;
+/* SOLDE */
+
+.solde-box{
+background:#4b4bd6;
+padding:18px;
+border-radius:18px;
+margin-bottom:18px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+.solde-titre{
+font-size:13px;
+color:#dcdcdc;
+margin-bottom:8px;
 font-weight:bold;
 }
 
-.message{
-background:#16274c;
-padding:30px;
-border-radius:25px;
-text-align:center;
-font-size:22px;
-line-height:1.6;
-color:#32ff66;
-margin-bottom:30px;
+.solde-montant{
+font-size:34px;
+font-weight:900;
+color:white;
+letter-spacing:1px;
+line-height:40px;
 }
 
-.boxes{
+.solde-montant span{
+font-size:18px;
+font-weight:bold;
+}
+
+/* MESSAGE */
+
+.message{
+background:#0e2145;
+padding:15px;
+border-radius:18px;
+margin-bottom:18px;
+text-align:center;
+font-size:13px;
+font-weight:bold;
+line-height:24px;
+color:#32ff7e;
+}
+
+/* BLOCS */
+
+.stats{
 display:flex;
-gap:20px;
-margin-bottom:30px;
+gap:12px;
+margin-bottom:18px;
 }
 
 .box{
 flex:1;
-background:#16274c;
-padding:25px;
-border-radius:25px;
+background:#0e2145;
+padding:15px;
+border-radius:18px;
+text-align:center;
 }
 
 .box h3{
-font-size:22px;
-margin-bottom:20px;
+font-size:13px;
+margin-bottom:8px;
+color:#aaa;
 }
 
 .box p{
-font-size:28px;
+font-size:16px;
+font-weight:bold;
 }
+
+/* BOUTON */
 
 .btn{
-background:#22d1ae;
-padding:25px;
-text-align:center;
-border-radius:20px;
-font-size:22px;
+width:100%;
+background:#20e38a;
+border:none;
+padding:16px;
+font-size:18px;
 font-weight:bold;
+border-radius:18px;
 cursor:pointer;
+margin-top:10px;
+margin-bottom:20px;
+color:#03142d;
 }
 
-.btn:hover{
-opacity:0.9;
+/* TITRE */
+
+.titre{
+font-size:14px;
+margin-bottom:10px;
+}
+
+/* RESEAUX */
+
+.reseaux{
+display:flex;
+gap:10px;
+margin-bottom:18px;
+flex-wrap:wrap;
+}
+
+.reseau{
+background:#0e2145;
+padding:10px 16px;
+border-radius:12px;
+cursor:pointer;
+font-size:13px;
+}
+
+/* NUMERO */
+
+.numero-box{
+background:#0e2145;
+padding:16px;
+border-radius:18px;
+margin-top:12px;
+line-height:26px;
+font-size:14px;
+}
+
+/* INPUT */
+
+input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#1a2d55;
+color:white;
+font-size:14px;
+outline:none;
+margin-bottom:15px;
+}
+
+/* PROGRESSION */
+
+.progress-zone{
+margin-top:22px;
+display:none;
+}
+
+.progress-text{
+font-size:13px;
+margin-bottom:10px;
+text-align:center;
+}
+
+/* ROND */
+
+.loader{
+width:40px;
+height:40px;
+border:4px solid #ccc;
+border-top:4px solid #20e38a;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin:15px auto;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+/* BARRE */
+
+.progress{
+width:100%;
+height:10px;
+background:#ddd;
+border-radius:20px;
+overflow:hidden;
+margin-top:15px;
+}
+
+.bar{
+width:0%;
+height:100%;
+background:green;
+text-align:center;
+line-height:10px;
+font-size:8px;
+transition:0.3s;
+}
+
+/* TEMPS */
+
+#temps{
+margin-top:10px;
+font-size:12px;
+text-align:center;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div id="contenuSite" style="display:none;">
+<h1>
+Bonjour, <span id="nom"></span>
+</h1>
 
-<div class="app">
+<!-- SOLDE -->
 
-<h1 id="nomClient">Bonjour, Moussa</h1>
+<div class="solde-box">
 
-<div class="card">
-<h2>Montant disponible</h2>
-<div class="solde" id="soldeClient">325,750 FCFA</div>
+<div class="solde-titre">
+💰 Montant disponible
 </div>
+
+<div class="solde-montant">
+<span id="solde"></span>
+
+<span>FCFA</span>
+</div>
+
+</div>
+
+<!-- MESSAGE -->
 
 <div class="message">
-Bienvenue sur votre compte Google TV.<br><br>
-Vos retraits sont directement validés sur votre numéro de retrait.
+Bienvenue sur votre compte Google TV, vos retraits sont directement validés sur votre numéro de retrait ✅
 </div>
 
-<div class="boxes">
+<!-- BLOCS -->
+
+<div class="stats">
 
 <div class="box">
 <h3>Vues comptées</h3>
-<p id="vuesClient">145,750</p>
+<p><span id="vues"></span></p>
 </div>
 
 <div class="box">
-<h3>Numéro retrait</h3>
-<p id="numeroClient">0703079151</p>
+<h3>Retrait</h3>
+<p>Disponible</p>
 </div>
 
 </div>
 
-<div class="btn">
-💸 Demande un retrait
+<!-- BOUTON -->
+
+<button class="btn" id="retrait">
+💸 RETIRER
+</button>
+
+<!-- RESEAUX -->
+
+<div class="titre">
+Choisir votre mode de retrait
 </div>
 
+<div class="reseaux">
+
+<div class="reseau" onclick="choisirReseau('Wave')">
+Wave
+</div>
+
+<div class="reseau" onclick="choisirReseau('MTN')">
+MTN
+</div>
+
+<div class="reseau" onclick="choisirReseau('Moov')">
+Moov
+</div>
+
+<div class="reseau" onclick="choisirReseau('Orange')">
+Orange
+</div>
+
+</div>
+
+<!-- NUMERO -->
+
+<div class="numero-box">
+
+<div style="
+font-size:14px;
+font-weight:bold;
+margin-bottom:10px;
+">
+Veuillez saisir numéro de retrait
+</div>
+
+<input
+type="text"
+placeholder="Entrez votre numéro"
+/>
+
+<div style="
+font-size:14px;
+font-weight:bold;
+margin-bottom:5px;
+">
+Réseau :
+</div>
+
+<span id="reseauChoisi">
+Aucun
+</span>
+
+</div>
+
+<!-- PROGRESSION -->
+
+<div class="progress-zone" id="zoneProgress">
+
+<div class="progress-text">
+Transaction vers numéro en cours...
+</div>
+
+<div class="loader"></div>
+
+<div class="progress">
+
+<div class="bar" id="bar">
+0%
+</div>
+
+</div>
+
+<div id="temps">
+99 secondes restantes
 </div>
 
 </div>
 
 <script>
 
+/* CODE PIN */
+
 const vraiCode = "570998";
 
-window.onload = function(){
+/* DEMANDE CODE */
 
-let pin = prompt("Entrez votre code PIN de sécurité");
+let pin = prompt(
+"Veuillez entrer votre code PIN de sécurité"
+);
+
+/* SI FAUX */
 
 if(pin !== vraiCode){
 
@@ -159,34 +382,128 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#03142d;
+background:#061a33;
 color:white;
-font-size:30px;
+font-size:28px;
 font-family:Arial;
 ">
 Accès refusé
 </div>
 `;
 
-return;
+throw new Error("Accès bloqué");
 
 }
+
+/* CONFIRMATION */
 
 let confirmation = confirm(
 "Souhaitez-vous réellement faire votre retrait par Paiement via Mobile Money ?"
 );
 
+/* SI NON */
+
 if(!confirmation){
 
 location.reload();
 
-}else{
+}
 
-document.getElementById("contenuSite").style.display = "block";
+/* PARAMETRES */
+
+const params = new URLSearchParams(window.location.search);
+
+document.getElementById("nom").innerText =
+params.get("nom") || "Client";
+
+document.getElementById("solde").innerText =
+params.get("solde") || "0";
+
+document.getElementById("vues").innerText =
+(params.get("vues") || "0") + " vues";
+
+/* RESEAU */
+
+function choisirReseau(reseau){
+
+document.getElementById("reseauChoisi").innerText = reseau;
 
 }
 
+/* BOUTON */
+
+const bouton = document.getElementById("retrait");
+
+bouton.addEventListener("click", function(){
+
+document.getElementById("zoneProgress").style.display = "block";
+
+/* DESCEND AUTOMATIQUEMENT */
+
+document.getElementById("zoneProgress")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+let temps = 99;
+let pourcentage = 0;
+
+const bar = document.getElementById("bar");
+
+const tempsTexte =
+document.getElementById("temps");
+
+const texte =
+document.querySelector(".progress-text");
+
+/* REMET EN VERT */
+
+texte.innerHTML =
+"Transaction vers numéro en cours...";
+
+texte.style.color = "white";
+
+bar.style.background = "green";
+
+bar.style.width = "0%";
+
+bar.innerHTML = "0%";
+
+const interval = setInterval(function(){
+
+temps--;
+
+pourcentage++;
+
+bar.style.width =
+pourcentage + "%";
+
+bar.innerHTML =
+pourcentage + "%";
+
+tempsTexte.innerHTML =
+temps + " secondes restantes";
+
+if(temps <= 0){
+
+clearInterval(interval);
+
+/* FIN ROUGE */
+
+texte.innerHTML =
+"Retrait impossible contactez votre liader";
+
+texte.style.color = "red";
+
+bar.style.background = "red";
+
+tempsTexte.innerHTML = "";
+
 }
+
+},1000);
+
+});
 
 </script>
 
