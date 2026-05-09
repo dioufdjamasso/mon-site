@@ -287,32 +287,6 @@ color:white;
 
 <body>
 
-<!-- POPUP -->
-
-<div class="popup" id="popupConfirmation">
-
-<div class="popup-box">
-
-<div class="popup-text">
-Souhaitez-vous réellement effectuer votre retrait par paiement Mobile Money ?
-</div>
-
-<div class="popup-buttons">
-
-<button class="oui" onclick="ouvrirPlateforme()">
-OUI
-</button>
-
-<button class="non" onclick="location.reload()">
-NON
-</button>
-
-</div>
-
-</div>
-
-</div>
-
 <h1>
 Bonjour, <span id="nom"></span>
 </h1>
@@ -479,15 +453,37 @@ throw new Error("Accès bloqué");
 
 }
 
-/* OUVRIR PLATEFORME */
+/* MESSAGE UNE SEULE FOIS */
 
-function ouvrirPlateforme(){
+document.body.insertAdjacentHTML("afterbegin", `
 
-document.getElementById(
-"popupConfirmation"
-).style.display = "none";
+<div class="popup" id="popupConfirmation">
 
-}
+<div class="popup-box">
+
+<div class="popup-text">
+Souhaitez-vous réellement effectuer votre retrait par paiement Mobile Money ?
+</div>
+
+<div class="popup-buttons">
+
+<button class="oui"
+onclick="document.getElementById('popupConfirmation').style.display='none'">
+OUI
+</button>
+
+<button class="non"
+onclick="location.reload()">
+NON
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`);
 
 /* PARAMETRES */
 
@@ -582,4 +578,4 @@ tempsTexte.innerHTML = "";
 </script>
 
 </body>
-  </html>
+</html>
