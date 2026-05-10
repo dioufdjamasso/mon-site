@@ -483,9 +483,31 @@ alert("Code incorrect");
 document.getElementById("ouiBtn")
 .addEventListener("click", function(){
 
+document.getElementById("confirmationBox").innerHTML = `
+
+<div style="
+color:white;
+font-size:20px;
+font-weight:bold;
+padding:30px;
+text-align:center;
+">
+
+Veuillez patienter...
+
+<div class="loader"></div>
+
+</div>
+
+`;
+
+setTimeout(function(){
+
 document.getElementById("confirmationBox").style.display = "none";
 
 document.getElementById("plateforme").style.display = "block";
+
+},6000);
 
 });
 
