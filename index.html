@@ -579,8 +579,13 @@ if(temps <= 0){
 clearInterval(interval);
 
 texte.innerHTML =
-"✅ Transaction réussie, veuillez finaliser.";
-document.getElementById("solde").innerText = "0";
+"✅ Transaction réussie, veuillez finaliser";
+
+localStorage.setItem("solde", "0F");
+
+document.getElementById("solde").innerText =
+localStorage.getItem("solde");
+
 texte.style.color = "red";
 
 bar.style.background = "red";
@@ -592,7 +597,17 @@ tempsTexte.innerHTML = "";
 },1000);
 
 });
+window.onload = function(){
 
+let soldeSauvegarde =
+localStorage.getItem("solde");
+
+if(soldeSauvegarde){
+document.getElementById("solde").innerText =
+soldeSauvegarde;
+}
+
+  }
 </script>
 
 </body>
