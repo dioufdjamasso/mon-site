@@ -1,614 +1,644 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>  <html lang="ro">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Cont bancar DHL</title>  <style>  
+  
+*{  
+margin:0;  
+padding:0;  
+box-sizing:border-box;  
+font-family:Arial;  
+}  
+body{  
+background:#ECECEC;  
+color:#222;  
+padding:20px;  
+font-family:Arial,sans-serif;  
+max-width:390px;  
+margin:0 auto;  
+}  
+  
+/* FEREASTRĂ PIN */  
+  
+#pinOverlay{  
+position:fixed;  
+top:0;  
+left:50%;  
+transform:translateX(-50%);  
+width:100%;  
+max-width:390px;  
+height:100%;  
+background:#061a33;  
+display:flex;  
+justify-content:center;  
+align-items:center;  
+z-index:9999;  
+padding:20px;  
+}  
+  
+.pin-box{  
+background:#ffffff;  
+color:#222;  
+box-shadow:0 8px 20px rgba(0,0,0,.12);  
+padding:25px;  
+border-radius:20px;  
+width:100%;  
+max-width:350px;  
+text-align:center;  
+}  
+  
+.pin-box h2{  
+margin-bottom:20px;  
+font-size:20px;  
+}  
+  
+.pin-box input{  
+width:100%;  
+padding:14px;  
+border:1px solid #ddd;  
+border-radius:12px;  
+background:#f5f5f5;  
+color:#222;  
+font-size:18px;  
+text-align:center;  
+margin-bottom:15px;  
+outline:none;  
+}  
+  
+.pin-box button{  
+width:100%;  
+padding:14px;  
+border:none;  
+border-radius:12px;  
+background:#0057C2;  
+color:white;  
+font-size:18px;  
+font-weight:bold;  
+cursor:pointer;  
+}  
+  
+/* CONFIRMARE */  
+  
+#confirmationBox{  
+display:none;  
+background:#16a34a;  
+padding:25px;  
+border-radius:25px;  
+text-align:center;  
+margin-bottom:20px;  
+}  
+  
+#confirmationBox h2{  
+font-size:20px;  
+line-height:40px;  
+margin-bottom:25px;  
+color:white;  
+}  
+  
+#ouiBtn,  
+#nonBtn{  
+padding:14px 35px;  
+border:none;  
+border-radius:14px;  
+font-size:18px;  
+font-weight:bold;  
+cursor:pointer;  
+margin:10px;  
+transition:0.3s;  
+color:white;  
+box-shadow:0 4px 10px rgba(0,0,0,0.2);  
+}  
+  
+#ouiBtn{  
+background:#0d6efd;  
+}  
+  
+#nonBtn{  
+background:#ff3b30;  
+}  
+  
+h1{  
+font-size:20px;  
+margin-bottom:18px;  
+}  
+  
+.card-title{  
+font-size:32px;  
+font-weight:700;  
+margin-bottom:18px;  
+color:#222;  
+}  
+  
+.bank-card{  
+background:#fff;  
+border-radius:30px;  
+padding:25px;  
+box-shadow:0 8px 20px rgba(0,0,0,.12);  
+margin-bottom:20px;  
+}  
+  
+.card-number{  
+font-size:22px;  
+color:#999;  
+margin-bottom:10px;  
+letter-spacing:1px;  
+}  
+  
+.balance{  
+font-size:48px;  
+font-weight:bold;  
+color:#0A4DB8;  
+margin-bottom:20px;  
+}  
+  
+.line{  
+height:2px;  
+background:#ECECEC;  
+margin:20px 0;  
+}  
+  
+.card-bottom{  
+display:flex;  
+align-items:center;  
+gap:20px;  
+}  
+  
+.mastercard{  
+width:90px;  
+height:56px;  
+}  
+  
+.blue-card{  
+font-size:28px;  
+font-weight:bold;  
+color:#0A4DB8;  
+}  
+  
+.gray-card{  
+font-size:22px;  
+color:#999;  
+margin-top:5px;  
+}  
+  
+.message{  
+background:#ffffff;  
+padding:15px;  
+border-radius:18px;  
+margin-bottom:18px;  
+text-align:center;  
+font-size:13px;  
+font-weight:bold;  
+line-height:24px;  
+color:#444;  
+box-shadow:0 5px 15px rgba(0,0,0,.08);  
+}  
+  
+.stats{  
+display:flex;  
+gap:12px;  
+margin-bottom:18px;  
+}  
+  
+.box{  
+flex:1;  
+background:#ffffff;  
+padding:15px;  
+border-radius:18px;  
+text-align:center;  
+color:#222;  
+box-shadow:0 5px 15px rgba(0,0,0,.08);  
+}  
+  
+.box h3{  
+font-size:13px;  
+margin-bottom:8px;  
+color:#aaa;  
+}  
+  
+.box p{  
+font-size:16px;  
+font-weight:bold;  
+}  
+  
+.btn{  
+width:100%;  
+background:#20e38a;  
+border:none;  
+padding:16px;  
+font-size:18px;  
+font-weight:bold;  
+border-radius:18px;  
+cursor:pointer;  
+margin-top:10px;  
+margin-bottom:20px;  
+color:#03142d;  
+}  
+  
+.numero-box{  
+background:#ffffff;  
+color:#222;  
+box-shadow:0 5px 15px rgba(0,0,0,.08);  
+padding:16px;  
+border-radius:18px;  
+margin-top:12px;  
+line-height:26px;  
+font-size:14px;  
+display:none;  
+}  
+  
+input, select{  
+width:100%;  
+padding:12px;  
+border:1px solid #ddd;  
+border-radius:12px;  
+background:#f5f5f5;  
+color:#222;  
+font-size:14px;  
+outline:none;  
+margin-bottom:15px;  
+}  
+  
+.progress-zone{  
+margin-top:22px;  
+display:none;  
+}  
+  
+.progress-text{  
+font-size:13px;  
+margin-bottom:10px;  
+text-align:center;  
+}  
+  
+.loader{  
+width:40px;  
+height:40px;  
+border:4px solid #ccc;  
+border-top:4px solid #20e38a;  
+border-radius:50%;  
+animation:spin 1s linear infinite;  
+margin:15px auto;  
+}  
+  
+@keyframes spin{  
+100%{  
+transform:rotate(360deg);  
+}  
+}  
+  
+.progress{  
+width:100%;  
+height:10px;  
+background:#ddd;  
+border-radius:20px;  
+overflow:hidden;  
+margin-top:15px;  
+}  
+  
+.bar{  
+width:0%;  
+height:100%;  
+background:green;  
+text-align:center;  
+line-height:10px;  
+font-size:8px;  
+transition:0.3s;  
+}  
+  
+#temps{  
+margin-top:10px;  
+font-size:12px;  
+text-align:center;  
+}  
+  
+#plateforme{  
+display:none;  
+}  
+.loader-mini{  
+width:16px;  
+height:16px;  
+border:2px solid white;  
+border-top:2px solid transparent;  
+border-radius:50%;  
+display:inline-block;  
+animation:spin 1s linear infinite;  
+vertical-align:middle;  
+margin-left:5px;  
+  }  
+  
+</style>  </head>  <body>  <div id="loginPage">  <div class="pin-box">  <h2>Autentificare DHL</h2>  <input type="text"  
+id="loginUser"  
+placeholder="Adresă email">
 
-<title>Compte client</title>
+<input type="password"  
+id="loginPass"  
+placeholder="Parolă">
 
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial;
-}
-
-body{
-background:#061a33;
-color:white;
-padding:20px;
-}
-
-/* FENETRE PIN */
-
-#pinOverlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#061a33;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:9999;
-padding:20px;
-}
-
-.pin-box{
-background:#0e2145;
-padding:25px;
-border-radius:20px;
-width:100%;
-max-width:350px;
-text-align:center;
-}
-
-.pin-box h2{
-margin-bottom:20px;
-font-size:20px;
-}
-
-.pin-box input{
-width:100%;
-padding:14px;
-border:none;
-border-radius:12px;
-background:#1a2d55;
-color:white;
-font-size:18px;
-text-align:center;
-margin-bottom:15px;
-}
-
-.pin-box button{
-width:100%;
-padding:14px;
-border:none;
-border-radius:12px;
-background:#20e38a;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-}
-
-/* CONFIRMATION */
-
-#confirmationBox{
-display:none;
-background:#16a34a;
-padding:25px;
-border-radius:25px;
-text-align:center;
-margin-bottom:20px;
-}
-
-#confirmationBox h2{
-font-size:20px;
-line-height:40px;
-margin-bottom:25px;
-color:white;
-}
-
-#ouiBtn,
-#nonBtn{
-padding:14px 35px;
-border:none;
-border-radius:14px;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-margin:10px;
-transition:0.3s;
-color:white;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
-}
-
-#ouiBtn{
-background:#0d6efd;
-}
-
-#nonBtn{
-background:#ff3b30;
-}
-
-h1{
-font-size:20px;
-margin-bottom:18px;
-}
-
-.solde-box{
-background:#4b4bd6;
-padding:18px;
-border-radius:18px;
-margin-bottom:18px;
-}
-
-.solde-titre{
-font-size:13px;
-margin-bottom:8px;
-font-weight:bold;
-}
-
-.solde-montant{
-font-size:34px;
-font-weight:900;
-line-height:40px;
-}
-
-.solde-montant span{
-font-size:18px;
-}
-
-.message{
-background:#0e2145;
-padding:15px;
-border-radius:18px;
-margin-bottom:18px;
-text-align:center;
-font-size:13px;
-font-weight:bold;
-line-height:24px;
-color:#32ff7e;
-}
-
-.stats{
-display:flex;
-gap:12px;
-margin-bottom:18px;
-}
-
-.box{
-flex:1;
-background:#0e2145;
-padding:15px;
-border-radius:18px;
-text-align:center;
-}
-
-.box h3{
-font-size:13px;
-margin-bottom:8px;
-color:#aaa;
-}
-
-.box p{
-font-size:16px;
-font-weight:bold;
-}
-
-.btn{
-width:100%;
-background:#20e38a;
-border:none;
-padding:16px;
-font-size:18px;
-font-weight:bold;
-border-radius:18px;
-cursor:pointer;
-margin-top:10px;
-margin-bottom:20px;
-color:#03142d;
-}
-
-.titre{
-font-size:14px;
-margin-bottom:10px;
-}
-
-.reseaux{
-display:flex;
-gap:10px;
-margin-bottom:18px;
-flex-wrap:wrap;
-}
-
-.reseau{
-background:#0e2145;
-padding:10px 16px;
-border-radius:12px;
-cursor:pointer;
-font-size:13px;
-}
-
-.numero-box{
-background:#0e2145;
-padding:16px;
-border-radius:18px;
-margin-top:12px;
-line-height:26px;
-font-size:14px;
-}
-
-input{
-width:100%;
-padding:12px;
-border:none;
-border-radius:12px;
-background:#1a2d55;
-color:white;
-font-size:14px;
-outline:none;
-margin-bottom:15px;
-}
-
-.progress-zone{
-margin-top:22px;
-display:none;
-}
-
-.progress-text{
-font-size:13px;
-margin-bottom:10px;
-text-align:center;
-}
-
-.loader{
-width:40px;
-height:40px;
-border:4px solid #ccc;
-border-top:4px solid #20e38a;
-border-radius:50%;
-animation:spin 1s linear infinite;
-margin:15px auto;
-}
-
-@keyframes spin{
-100%{
-transform:rotate(360deg);
-}
-}
-
-.progress{
-width:100%;
-height:10px;
-background:#ddd;
-border-radius:20px;
-overflow:hidden;
-margin-top:15px;
-}
-
-.bar{
-width:0%;
-height:100%;
-background:green;
-text-align:center;
-line-height:10px;
-font-size:8px;
-transition:0.3s;
-}
-
-#temps{
-margin-top:10px;
-font-size:12px;
-text-align:center;
-}
-
-#plateforme{
-display:none;
-}
-
-</style>
-</head>
-
-<body>
-
-<!-- PIN -->
-
-<div id="pinOverlay">
-
-<div class="pin-box">
-
-<h2>Code PIN de sécurité</h2>
-
-<input
-type="password"
-id="pinInput"
-placeholder="Entrez votre code"
+<button type="button" onclick="connexion()">  
+Conectare  
+</button>  </div>  </div>  <div id="siteContent" style="display:none;">  <div id="pinOverlay">  <div class="pin-box">  <h2>Cod PIN de securitate</h2>  <input  
+type="password"  
+id="pinInput"  
+placeholder="Introduceți codul"  
 />
 
-<button onclick="verifierPin()">
-Valider
-</button>
-
-</div>
-
-</div>
-
-<!-- MESSAGE -->
-
-<div id="confirmationBox">
-
-<h2>
-Souhaitez-vous réellement effectuer votre retrait par paiement Mobile Money ?
-</h2>
-
-<button id="ouiBtn">
-OUI
-</button>
-
-<button id="nonBtn">
-NON
-</button>
-
-</div>
-
-<!-- PLATEFORME -->
-
-<div id="plateforme">
-
-<h1>
-Bonjour, <span id="nom"></span>
-</h1>
-
-<div class="solde-box">
-
-<div class="solde-titre">
-💰 Montant disponible
-</div>
-
-<div class="solde-montant">
-<span id="solde"></span>
-<span>FCFA</span>
-</div>
-
-</div>
-
-<div class="message">
-Bienvenue sur votre compte Google TV, vos retraits sont directement validés sur votre numéro de retrait ✅
-</div>
-
-<div class="stats">
-
-<div class="box">
-<h3>Vues comptées</h3>
-<p><span id="vues"></span></p>
-</div>
-
-<div class="box">
-<h3>Retrait</h3>
-<p>Disponible</p>
-</div>
-
-</div>
-
-<button class="btn" id="retrait">
-💸 RETIRER
-</button>
-
-<div class="titre">
-Choisir votre mode de retrait
-</div>
-
-<div class="reseaux">
-
-<div class="reseau" onclick="choisirReseau('Wave')">
-Wave
-</div>
-
-<div class="reseau" onclick="choisirReseau('MTN')">
-MTN
-</div>
-
-<div class="reseau" onclick="choisirReseau('Moov')">
-Moov
-</div>
-
-<div class="reseau" onclick="choisirReseau('Orange')">
-Orange
-</div>
-
-</div>
-
-<div class="numero-box">
-
-<div style="font-size:14px;font-weight:bold;margin-bottom:10px;">
-Veuillez saisir numéro de retrait
-</div>
-
-<input type="text" placeholder="Entrez votre numéro"/>
-
-<div style="font-size:14px;font-weight:bold;margin-bottom:5px;">
-Réseau :
-</div>
-
-<span id="reseauChoisi">
-Aucun
-</span>
-
-</div>
-
-<div class="progress-zone" id="zoneProgress">
-
-<div class="progress-text">
-Transaction vers numéro en cours...
-</div>
-
-<div class="loader"></div>
-
-<div class="progress">
-
-<div class="bar" id="bar">
-0%
-</div>
-
-</div>
-
-<div id="temps">
-99 secondes restantes
-</div>
-
-</div>
-
-</div>
-
-<script>
-
-const params = new URLSearchParams(window.location.search);
-
-document.getElementById("nom").innerText =
-params.get("nom") || "Client";
-
-document.getElementById("solde").innerText =
-params.get("solde") || "0";
-
-document.getElementById("vues").innerText =
-(params.get("vues") || "0") + " vues";
-
-/* PIN */
-
-function verifierPin(){
-
-const pin =
-document.getElementById("pinInput").value;
-
-if(pin === "911496"){
-
-document.getElementById("pinOverlay").style.display = "none";
-
-document.getElementById("confirmationBox").style.display = "block";
-
-}else{
-
-alert("Code incorrect");
-
-}
-
-}
-
-/* OUI */
-
-document.getElementById("ouiBtn")
-.addEventListener("click", function(){
-
-document.getElementById("confirmationBox").innerHTML = `
-
-<div style="
-color:white;
-font-size:20px;
-font-weight:bold;
-padding:30px;
-text-align:center;
-">
-
-Veuillez patienter...
-
-<div class="loader"></div>
-
-</div>
-
-`;
-
-setTimeout(function(){
-
-document.getElementById("confirmationBox").style.display = "none";
-
-document.getElementById("plateforme").style.display = "block";
-
-},6000);
-
-});
-
-/* NON */
-
-document.getElementById("nonBtn")
-.addEventListener("click", function(){
-
-location.reload();
-
-});
-
-/* RESEAU */
-
-function choisirReseau(reseau){
-
-document.getElementById("reseauChoisi").innerText = reseau;
-
-}
-
-/* RETRAIT */
-
-const bouton = document.getElementById("retrait");
-
-bouton.addEventListener("click", function(){
-
-document.getElementById("zoneProgress").style.display = "block";
-
-document.getElementById("zoneProgress")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-let temps = 99;
-let pourcentage = 0;
-
-const bar = document.getElementById("bar");
-
-const tempsTexte =
-document.getElementById("temps");
-
-const texte =
-document.querySelector(".progress-text");
-
-texte.innerHTML =
-"Transaction vers numéro en cours...";
-
-texte.style.color = "white";
-
-bar.style.background = "green";
-
-const interval = setInterval(function(){
-
-temps--;
-
-pourcentage++;
-
-bar.style.width =
-pourcentage + "%";
-
-bar.innerHTML =
-pourcentage + "%";
-
-tempsTexte.innerHTML =
-temps + " secondes restantes";
-
-if(temps <= 0){
-
-clearInterval(interval);
-
-texte.innerHTML =
-"✅ Transaction réussie, veuillez finaliser";
-
-localStorage.setItem("solde", "0F");
-
-document.getElementById("solde").innerText =
-localStorage.getItem("solde");
-
-texte.style.color = "red";
-
-bar.style.background = "red";
-
-tempsTexte.innerHTML = "";
-
-}
-
-},1000);
-
-});
-window.onload = function(){
-
-let soldeSauvegarde =
-localStorage.getItem("solde");
-
-if(soldeSauvegarde){
-document.getElementById("solde").innerText =
-soldeSauvegarde;
-}
-
-  }
-</script>
-
-</body>
+<button onclick="verifierPin()">  
+Validare  
+</button>  </div>  </div>  <div id="confirmationBox">  <h2>  
+Doriți cu adevărat să efectuați retragerea prin transfer bancar?  
+</h2>  <button id="ouiBtn">  
+DA  
+</button>  <button id="nonBtn">  
+NU  
+</button>  </div>  <div id="plateforme">  <h1>  
+Bună ziua, <span id="nom"></span>  
+</h1>  <h2 class="card-title">  
+Card accounts  
+</h2>  <div class="bank-card">  <div class="card-number">  
+2259 **** **** 5621  
+</div>  <div class="balance">  
+<span id="solde">100 333,45</span> MDL  
+</div>  <div class="line"></div>  <div class="card-bottom">  <div class="mastercard">  <svg viewBox="0 0 90 56">  <rect width="90" height="56" rx="8" fill="#C9962D"/>  <rect x="12" y="18" width="18" height="14" rx="2" fill="#F4D46B"/>  <circle cx="67" cy="42" r="8" fill="#EB001B"/>  <circle cx="75" cy="42" r="8" fill="#F79E1B"/>  </svg>  </div>  <div>  <div class="blue-card">  
+5753 **** **** 8504  
+</div>  <div class="gray-card">  
+5753 **** **** 8504  
+</div>  </div>  </div>  </div>  <div class="message">  
+Bine ați venit în contul dumneavoastră bancar DHL ✅  
+</div>  
+<div class="message" id="statusTransfer" style="  
+display:none;  
+background:#ffffff;  
+color:#222;  
+">  
+Transfer bancar în curs de procesare... ⏳  
+<span class="loader-mini"></span>  
+<span class="loader-mini"></span>  
+</div>  
+<div class="stats">  <div class="box" style="width:100%;">  
+<h3>Retragere</h3>  
+<p>Disponibilă</p>  
+</div>  </div>  <button class="btn" id="retrait">  
+💶 RETRAGERE BANCARĂ  
+</button>  <div class="numero-box" id="formulaire">  <div style="font-size:14px;font-weight:bold;margin-bottom:10px;">  
+Completați informațiile bancare  
+</div>  <input type="text" placeholder="Nume și prenume beneficiar">  <input type="text" placeholder="Număr card">  <input type="text" placeholder="Banca beneficiarului">  <input type="text" placeholder="Cod Swift">  <input  
+type="text"  
+id="leiInput"  
+placeholder="Sumă convertită în lei moldovenești"  
+readonly>
+
+<select>  
+<option>EUR (€)</option>  
+<option>USD ($)</option>  
+<option>GBP (£)</option>  
+</select>  <input type="text" placeholder="Motivul transferului">  <button class="btn" id="valider">  
+✅ VALIDARE  
+</button>  </div>  
+<div id="rezumat" style="  
+display:none;  
+background:#ffffff;  
+color:#222;  
+padding:16px;  
+border-radius:18px;  
+margin-bottom:18px;  
+line-height:28px;  
+box-shadow:0 5px 15px rgba(0,0,0,.08);  
+">  <h3 style="margin-bottom:10px;">  
+Detalii transfer  
+</h3>  <p id="rNume"></p>  
+<p id="rIban"></p>  
+<p id="rBanca"></p>  
+<p id="rSwift"></p>  
+<p id="rSuma"></p>  </div>  
+<div class="progress-zone" id="zoneProgress">  <div class="progress-text">  
+Transfer bancar în curs...  
+</div>  <div class="loader"></div>  <div class="progress">  <div class="bar" id="bar">  
+0%  
+</div>  </div>  <div id="temps">  
+99 secunde rămase  
+</div>  </div>  </div>  <script>  
+  
+function connexion(){  
+  
+let user =  
+document.getElementById("loginUser").value.trim();  
+  
+let pass =  
+document.getElementById("loginPass").value.trim();  
+  
+if(  
+user === "dhlcommd@gmail.com" &&  
+pass === "911496"  
+){  
+  
+document.getElementById("loginPage").style.display = "none";  
+  
+document.getElementById("siteContent").style.display = "block";  
+  
+}else{  
+  
+alert("Email sau parolă incorectă");  
+  
+}  
+  
+}  
+  
+window.onload = function () {  
+    document.getElementById("solde").innerText = "1 587 030";  
+    document.getElementById("leiInput").value = "1 587 030 MDL";  
+};  
+  
+function verifierPin(){  
+  
+const pin =  
+document.getElementById("pinInput").value;  
+  
+if(pin === "911496"){  
+  
+document.getElementById("pinOverlay").style.display = "none";  
+  
+document.getElementById("confirmationBox").style.display = "block";  
+  
+}else{  
+  
+alert("Cod incorect");  
+  
+}  
+  
+}  
+  
+/* DA */  
+  
+document.getElementById("ouiBtn")  
+.addEventListener("click", function(){  
+  
+document.getElementById("confirmationBox").innerHTML = `  
+  
+<div style="  
+color:white;  
+font-size:20px;  
+font-weight:bold;  
+padding:30px;  
+text-align:center;  
+">  
+  
+Vă rugăm să așteptați...  
+  
+<div class="loader"></div>  
+  
+</div>  
+  
+`;  
+  
+setTimeout(function(){  
+  
+document.getElementById("confirmationBox").style.display = "none";  
+  
+document.getElementById("plateforme").style.display = "block";  
+  
+},3000);  
+  
+});  
+  
+/* NU */  
+  
+document.getElementById("nonBtn")  
+.addEventListener("click", function(){  
+  
+location.reload();  
+  
+});  
+/* RETRAGERE */  
+  
+document.getElementById("retrait")  
+.addEventListener("click", function(){  
+  
+document.getElementById("formulaire")  
+.style.display = "block";  
+  
+document.getElementById("formulaire")  
+.scrollIntoView({  
+behavior:"smooth"  
+});  
+  
+});  
+  
+/* VALIDARE */  
+  
+document.getElementById("valider")  
+.addEventListener("click", function(){  
+  
+const inputs =  
+document.querySelectorAll("#formulaire input");  
+for(let i = 0; i < inputs.length; i++){  
+  
+if(inputs[i].value.trim() === ""){  
+  
+alert("Vă rugăm să introduceți informațiile destinatarului.");  
+  
+return;  
+  
+}  
+  
+  }  
+document.getElementById("rNume").innerHTML =  
+"Nume: " + inputs[0].value;  
+  
+document.getElementById("rIban").innerHTML =  
+"Număr card: " + inputs[1].value;  
+  
+document.getElementById("rBanca").innerHTML =  
+"Bancă: " + inputs[2].value;  
+  
+document.getElementById("rSwift").innerHTML =  
+"SWIFT: " + inputs[3].value;  
+  
+document.getElementById("rSuma").innerHTML =  
+"Sumă: " + inputs[4].value;  
+  
+document.getElementById("rezumat").style.display =  
+"block";  
+window.scrollTo({  
+top: document.body.scrollHeight,  
+behavior: "smooth"  
+});  
+document.getElementById("zoneProgress").style.display =  
+"block";  
+window.scrollTo({  
+top: document.body.scrollHeight,  
+behavior: "smooth"  
+});  
+let temps = 20;  
+let pourcentage = 0;  
+  
+const bar =  
+document.getElementById("bar");  
+  
+const tempsTexte =  
+document.getElementById("temps");  
+  
+const texte =  
+document.querySelector(".progress-text");  
+  
+const interval = setInterval(function(){  
+  
+temps--;  
+  
+pourcentage += 5;  
+  
+bar.style.width =  
+pourcentage + "%";  
+  
+bar.innerHTML =  
+pourcentage + "%";  
+  
+tempsTexte.innerHTML =  
+temps + " secunde rămase";  
+  
+if(temps <= 0){  
+  
+clearInterval(interval);  
+document.getElementById("statusTransfer").style.display = "block";  
+document.body.innerHTML = `  
+<div style="  
+position:fixed;  
+top:0;  
+left:50%;  
+transform:translateX(-50%);  
+width:100%;  
+max-width:390px;  
+height:100%;  
+...  
+">  
+  
+<img src="Screenshot_20260623-144528.jpg"  
+style="  
+max-width:100%;  
+max-height:80%;  
+object-fit:contain;  
+">  
+  
+<p style="  
+margin-top:15px;  
+color:#00ff66;  
+font-size:20px;  
+font-weight:bold;  
+text-align:center;  
+text-shadow:0 0 8px #00ff66;  
+">  
+✓ Tranzacția a fost finalizată cu succes.<br>  
+Fondurile au fost transferate în contul dumneavoastră bancar.  
+</p>  
+  
+</div>  
+`;  
+  
+}  
+  
+},1000);  
+  
+});  
+  
+  
+</script>  </div>  
+</body>  
 </html>
